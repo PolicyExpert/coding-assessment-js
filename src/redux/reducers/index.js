@@ -1,14 +1,3 @@
-const initialState = {
-  message: 'Loading...',
-  href: null
-};
+import reducers from './reducers';
 
-export default function(state = initialState, action) {
-  return action.type === 'setLink'
-    ? {
-      ...state,
-      message: action.link.message,
-      href: action.link.href
-    }
-    : state;
-}
+export default reducers;

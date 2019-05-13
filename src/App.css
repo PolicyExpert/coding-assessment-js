@@ -1,32 +1,40 @@
 .App {
-  text-align: center;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    font-size: calc(10px + 2vmin);
+    color: #282c34;
 }
 
-.App-logo {
-  height: 10vmin;
-  pointer-events: none;
+.card {
+    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.15), 0 4px 20px 0 rgba(0, 0, 0, 0.1);
+    margin: 50px 20px;
+    position: relative;
+    transition: all 150ms ease-in-out;
+    cursor: pointer;
+    background-color: ghostwhite;
+    border-radius: 5px;
+    flex: 0 1 20%;
+    display: flex;
+    align-items: center;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.card:hover {
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15), 0 6px 6px rgba(0, 0, 0, 0.19);
+    opacity: 0.92;
 }
 
-.App-link {
-  color: #61dafb;
+.card > img {
+    margin: 5px;
+    transition: all 300ms ease;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.card.displayed {
+}
+
+.card > .title {
+    box-sizing: border-box;
+    font-size: 1rem;
+    padding: 5px;
+    text-align: start;
 }

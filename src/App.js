@@ -1,36 +1,49 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
 import { connect } from 'react-redux';
 
-export const App = ({message, href, fetch}) => {
-  fetch && fetch();
+import './App.css';
 
-  return <div className="App">
-    <header className="App-header">
-      <img src={logo} className="App-logo" alt="logo" />
-      <a
-        className="App-link"
-        href={href}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        {message}
-      </a>
-    </header>
-  </div>;
-}
+export const Thumbnail = ({ card: { title, id } }) => <img src={`https://picsum.photos/150/150?grayscale&${id}`} alt={title} />;
 
-const mapStateToProps = state => ({
-  message: state.message,
-  href: state.href
+export const Card = ({ card, displayImageId, displayImage }) => {
+    const isDisplayImage = displayImageId === card.id;
+    return (
+        <div className={`card${isDisplayImage ? ' displayed' : ''}`} onClick={() => displayImage(card)}>
+            <div className="title">{card.title}</div>
+            {isDisplayImage ? <img src={card.url} alt={card.title} /> : <Thumbnail card={card} />}
+        </div>
+    );
+};
+
+export const App = ({ cards, displayImageId, loading, fetchImages, displayImage }) => {
+    return (
+        <>
+            <div className="App">
+                {cards.map(card => {
+                    return (
+                        <Card key={card.id} card={card} displayImage={displayImage} displayImageId={displayImageId} />
+                    );
+                })}
+            </div>
+            {loading && <h1>Loading.......</h1>}
+        </>
+    );
+};
+
+const mapStateToProps = ({ cards, displayImageId, loading, fetchImages, displayImage }) => ({
+    cards,
+    displayImageId,
+    loading,
+    fetchImages,
+    displayImage,
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetch: () => dispatch({type: 'fetch'})
+    fetchImages: () => dispatch({ type: 'FETCH_IMAGES' }),
+    displayImage: ({ id }) => dispatch({ type: 'DISPLAY_IMAGE', id }),
 });
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+    mapStateToProps,
+    mapDispatchToProps,
 )(App);
